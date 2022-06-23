@@ -85,7 +85,22 @@ class Game extends React.Component {
       xIsNext: (step % 2) === 0
     })
   }
+  shouldComponentUpdate() {
+    console.log('3. shouldComponentUpdate - Before change Props/State')
+    //! Must return true or false
+    return true
+    //* true: will re-render component
+    //? return false
+    //* false: not re-render component
+  }
+  componentDidUpdate() {
+    console.log('4. componentDidUpdate - After Re-Render Done')
+  }
+  componentDidMount() {
+    console.log('2. componentDidMount - Render Done')
+  }
   render() {
+    console.log('render')
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
