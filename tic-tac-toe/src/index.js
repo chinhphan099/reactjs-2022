@@ -1,3 +1,5 @@
+// Refer React Tic Tac Toe: https://codepen.io/chinhphan099/pen/ZErdqpa?editors=0010
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -8,7 +10,7 @@ function Square(props) {
   return (
     <button
       className="square"
-      onClick={props.onClick}
+      onClick={props.handleSquareClick}
     >
       {props.value}
     </button>
@@ -20,7 +22,7 @@ class Board extends React.Component {
     return (
       <Square
         value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
+        handleSquareClick={this.props.handleSquareClick.bind(this, i)}
       />
     );
   }
@@ -61,7 +63,7 @@ class Game extends React.Component {
       xIsNext: true
     }
   }
-  handleClick(i) {
+  handleSquareClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
@@ -91,7 +93,7 @@ class Game extends React.Component {
       const desc = move ? 'Go to move #' + move : 'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button onClick={this.jumpTo.bind(this, move)}>{desc}</button>
         </li>
       )
     });
@@ -107,7 +109,7 @@ class Game extends React.Component {
         <div className="game-board">
           <Board
             squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
+            handleSquareClick={(i) => this.handleSquareClick(i)}
           />
         </div>
         <div className="game-info">
